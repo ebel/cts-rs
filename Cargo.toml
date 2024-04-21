@@ -1,0 +1,11 @@
+[package]
+name = "ct_status"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+aws-config = { version = "1.2.0", features = ["behavior-version-latest"] } # Use the latest version
+aws-sdk-controltower = "1.21.0" # Use the latest version
+tokio = { version = "1", features = ["full"] }
