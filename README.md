@@ -12,8 +12,12 @@
 
 A command line utility using the AWS Rust SDK to get all the available information for your AWS Control Tower setup.
 
-
-- **
+#### TODO:
+- Support all read operations of AWS Control Tower Rust SDK
+- Table, json or text output
+- List Accounts enrolled in AWS Control Tower
+- Lost OUs enrolled in AWS Control Tower
+- TBD
 
 
 
