@@ -4,7 +4,7 @@ authors = ["Tyler Ebel <tebel@tylerebel.com>"]
 version = "0.1.0"
 edition = "2021"
 publish = false
-
+description = "ctr-rs is a CLI tool designed to interface with AWS Control Tower. It provides capabilities to read AWS Control Tower statuses of your dedicated payer account"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -18,3 +18,4 @@ colored = "2.0"
 aws-config = { version = "1.2.0", features = ["behavior-version-latest"] } # Use the latest version
 aws-sdk-controltower = "1.21.0" # Use the latest version
 tokio = { version = "1", features = ["full"] }
+clap = { version = "4.5.4", features = ["derive"] }
