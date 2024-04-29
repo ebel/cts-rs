@@ -10,12 +10,10 @@
 </picture>
 
 
-A command line utility using AWS Rust SDK to get all the info of your AWS Control Tower setup.
+A command line utility using the AWS Rust SDK to get all the available information for your AWS Control Tower setup.
 
 
-## Authors
-
-- [@ebel](https://github.com/ebel)
+- **
 
 
 
