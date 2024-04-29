@@ -1,3 +1,8 @@
+<picture>
+ <source media="(prefers-color-scheme: dark)" srcset="https://github.com/ebel/cts-rs/blob/main/cyberpunk_cityscape_with_crab_1280x640.png">
+ <source media="(prefers-color-scheme: light)" srcset="https://github.com/ebel/cts-rs/blob/main/cyberpunk_cityscape_with_crab_1280x640.png">
+ <img alt="YOUR-ALT-TEXT" src="https://github.com/ebel/cts-rs/blob/main/cyberpunk_cityscape_with_crab_1280x640.png">
+</picture>
 
 # cts-rs
 
