@@ -159,6 +159,7 @@ async fn main() -> Result<(), aws_sdk_controltower::Error> {
     let control_tower_client = AwsControlTowerClient::new().await?;
     control_tower_client.list_landing_zones().await?;
 
+    // Manually enter OU ARN here.
     let target_identifier = "";
     control_tower_client.list_enabled_controls(target_identifier).await?;
 
