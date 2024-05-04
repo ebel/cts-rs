@@ -12,6 +12,9 @@ readme = "README.md"
 keywords = ["aws", "controltower", "control", "tower", "cli"]
 categories = ["command-line-utilities", "development-tools"]
 
+exclude = [
+    "repo_pic.png",
+]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
