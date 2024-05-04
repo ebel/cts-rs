@@ -9,6 +9,10 @@ use clap::{Command};
 
 //Make calls to sdk DRY
 
+extern crate cfonts;
+
+use cfonts::{ say, Fonts, Colors, Options };
+
 
 pub struct AwsControlTowerClient {
     client: ControlTowerClient,
@@ -41,6 +45,7 @@ impl AwsControlTowerClient {
                     println!("{}", "No ARN available for this landing zone".yellow());
                 }
             }
+            println!();
         }
         Ok(())
     }
@@ -105,10 +110,45 @@ impl AwsControlTowerClient {
             }
         }
     }
+    // pub async fn list_enabled_baselines(&self) -> Result<ListEnabledBaselinesOutput, ControlTowerError> {
+    //     match self.client.list_enabled_baselines().send().await {
+    //         Ok(response) => {
+    //             println!("Enabled Baselines:");
+    //             for baseline in &response.baselines {
+    //                 let arn = &baseline.arn;
+    //                 let name = &baseline.name;
+    //                 let _description = &baseline.description;
+    //                 println!("ARN: {}", arn);
+    //                 println!("Name: {}", name);
+    //                 let _description = baseline.description.as_deref().unwrap_or("No description available");                    println!(); // Adds a blank line for better separation
+    //             }
+    //
+    //             if let Some(next_token) = &response.next_token {
+    //                 println!("Next token for pagination: {}", next_token);
+    //             } else {
+    //                 println!("No more pages.");
+    //             }
+    //
+    //             Ok(response)
+    //         },
+    //         Err(e) => {
+    //             println!("Error fetching baselines: {}", e);
+    //             Err(ControlTowerError::from(e))
+    //         }
+    //     }
+    // }
 }
 
 #[tokio::main]
 async fn main() -> Result<(), aws_sdk_controltower::Error> {
+
+    say(Options {
+        text: String::from("cts-rs"),
+        font: Fonts::FontBlock,
+        colors: vec![Colors::System],
+        ..Options::default()
+    });
+
     let app = Command::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
         .author(env!("CARGO_PKG_AUTHORS"))

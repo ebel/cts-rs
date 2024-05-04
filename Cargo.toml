@@ -3,8 +3,15 @@ name = "cts-rs"
 authors = ["Tyler Ebel <tebel@tylerebel.com>"]
 version = "0.1.0"
 edition = "2021"
-publish = false
-description = "ctr-rs is a CLI tool designed to interface with AWS Control Tower. It provides capabilities to read AWS Control Tower statuses of your dedicated payer account"
+rust-version = "1.78"
+description = "cts-rs is a CLI tool designed to interface with AWS Control Tower. It provides capabilities to read AWS Control Tower statuses of your dedicated payer account using the RUST AWS SDK"
+license = "Apache-2.0"
+documentation = ""
+repository = "https://github.com/ebel/cts-rs"
+readme = "README.md"
+keywords = ["aws", "controltower", "control", "tower", "cli"]
+categories = ["command-line-utilities", "development-tools"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
