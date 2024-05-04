@@ -1,9 +1,9 @@
 [package]
 name = "cts-rs"
 authors = ["Tyler Ebel <tebel@tylerebel.com>"]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
-rust-version = "1.78"
+rust-version = "1.77.2"
 description = "cts-rs is a CLI tool designed to interface with AWS Control Tower. It provides capabilities to read AWS Control Tower statuses of your dedicated payer account using the RUST AWS SDK"
 license = "Apache-2.0"
 documentation = "https://docs.rs/cts-rs"
