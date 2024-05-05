@@ -1,18 +1,17 @@
 use aws_config::meta::region::RegionProviderChain;
 use aws_config::BehaviorVersion;
-//use aws_sdk_controltower as controltower;
 use aws_sdk_controltower::operation::list_baselines::ListBaselinesOutput; // Correct import for ListBaselinesOutput
 use aws_sdk_controltower::{Client as ControlTowerClient, Error as ControlTowerError};
 
-use colored::*; // Import the colored crate
-use clap::{Command};
+use colored::*;
+use clap::{Command, Arg,ArgAction};
+use std::io::{self, Write}; // For input/output operations
+
 
 //Make calls to sdk DRY
 
 extern crate cfonts;
-
 use cfonts::{ say, Fonts, Colors, Options };
-
 
 pub struct AwsControlTowerClient {
     client: ControlTowerClient,
@@ -51,7 +50,7 @@ impl AwsControlTowerClient {
     }
 
     // Method to list enabled controls for a given target identifier
-    pub async fn list_enabled_controls(&self, target_identifier: &str) -> Result<(), aws_sdk_controltower::Error> {
+    pub async fn list_enabled_controls(&self, target_identifier: String) -> Result<(), aws_sdk_controltower::Error> {
         let response = self.client.list_enabled_controls().target_identifier(target_identifier).send().await?;
 
         println!("{}", "Control Tower Control is:".blue());
@@ -138,7 +137,6 @@ impl AwsControlTowerClient {
     //     }
     // }
 }
-
 #[tokio::main]
 async fn main() -> Result<(), aws_sdk_controltower::Error> {
 
@@ -149,18 +147,35 @@ async fn main() -> Result<(), aws_sdk_controltower::Error> {
         ..Options::default()
     });
 
-    let app = Command::new(env!("CARGO_PKG_NAME"))
+    let matches = Command::new("CARGO_PKG_NAME")
         .version(env!("CARGO_PKG_VERSION"))
         .author(env!("CARGO_PKG_AUTHORS"))
-        .about(env!("CARGO_PKG_DESCRIPTION")); // No `takes_value()` needed
+        .about(env!("CARGO_PKG_DESCRIPTION"))
+        .arg(Arg::new("target_identifier")
+            .help("Sets the target identifier (OU ARN)")
+            .action(ArgAction::Set)
+            .required(false))
+        .get_matches();
 
-    let _matches = app.get_matches();
+    let mut target_identifier = matches.get_one::<String>("target_identifier").map(String::from);
+
+    // Check if target_identifier was not provided and prompt for it
+    if target_identifier.is_none() {
+        println!("Please enter a target identifier (OU ARN):");
+        let mut input = String::new();
+        io::stdout().flush().unwrap(); // Ensure the prompt is displayed immediately
+        io::stdin().read_line(&mut input).expect("Failed to read line");
+        target_identifier = Some(input.trim().to_string()); // Trim newline and other whitespace
+    }
+
+    // Now you can unwrap because you've handled the case where it's missing. Verify..
+    let target_identifier = target_identifier.unwrap();
+    println!("Using target identifier (OU ARN): {}", target_identifier);
 
     let control_tower_client = AwsControlTowerClient::new().await?;
+
     control_tower_client.list_landing_zones().await?;
 
-    // Manually enter OU ARN here.
-    let target_identifier = "";
     control_tower_client.list_enabled_controls(target_identifier).await?;
 
     control_tower_client.list_baselines().await?;
