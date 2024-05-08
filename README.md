@@ -18,11 +18,9 @@ A command line utility using the AWS Rust SDK to get all the available informati
 * Auth via [aws creds](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) before using.
 * Use an organzation ARN that is not the root OU.
 
-------------------
 ## Usage
 * Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 * `cargo install cts-rs --version "<replace with latest version here>"`
-------------------
 
 #### TODO:
 - [ ] Support all read operations of AWS Control Tower Rust SDK
