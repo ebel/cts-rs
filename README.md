@@ -20,8 +20,8 @@ A command line utility using the AWS Rust SDK to get all the available informati
 
 ------------------
 ## Usage
-* Install [crate](https://doc.rust-lang.org/cargo/getting-started/installation.html)
-* 
+* Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
+* `cargo install cts-rs --version "<replace with latest version here>"`
 ------------------
 
 #### TODO:
