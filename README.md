@@ -36,4 +36,3 @@ A command line utility using the AWS Rust SDK to get all the available informati
 - [ ] Build, Test, Release GHA workflows
 - [X] Signed commits setup
 - [ ] TBD
-
