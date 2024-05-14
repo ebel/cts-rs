@@ -22,7 +22,7 @@ A command line utility using the AWS Rust SDK to get all the available informati
 * Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html)
 * `cargo install cts-rs --version "<replace with latest version here>"`
 
-#### TODO:
+## TODO:
 - [ ] Support all read operations of AWS Control Tower Rust SDK
 - [ ] Table, json or text output
 - [ ] List Accounts enrolled in AWS Control Tower
@@ -33,6 +33,6 @@ A command line utility using the AWS Rust SDK to get all the available informati
 - [ ] Command line input
   - [X] Initial OU prompt at startup
 - [ ] Output color formatting
+- [ ] Build, Test, Release GHA workflows
 - [ ] TBD
-
 
