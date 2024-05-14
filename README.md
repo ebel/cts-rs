@@ -34,5 +34,6 @@ A command line utility using the AWS Rust SDK to get all the available informati
   - [X] Initial OU prompt at startup
 - [ ] Output color formatting
 - [ ] Build, Test, Release GHA workflows
+- [X] Signed commits setup
 - [ ] TBD
 
