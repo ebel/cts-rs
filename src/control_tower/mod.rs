@@ -42,8 +42,8 @@ impl AwsControlTowerClient {
     }
 
     // Method to list enabled controls for a given target identifier
-    pub async fn list_enabled_controls(&self, target_identifier: String) -> Result<(), aws_sdk_controltower::Error> {
-        let response = self.client.list_enabled_controls().target_identifier(target_identifier).send().await?;
+    pub async fn list_enabled_controls(&self, parent_id: &str) -> Result<(), aws_sdk_controltower::Error> {
+        let response = self.client.list_enabled_controls().target_identifier(parent_id).send().await?;
 
         println!("{}", "The Control Tower controls that are enabled are:".blue());
 
@@ -90,10 +90,7 @@ impl AwsControlTowerClient {
 
                 if let Some(next_token) = &response.next_token {
                     println!("Next token for pagination: {}", next_token);
-                } else {
-                    println!("No more pages.");
                 }
-
                 Ok(response)
             },
             Err(e) => {

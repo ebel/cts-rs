@@ -27,6 +27,7 @@ cfonts = "1"
 
 aws-config = { version = "1.2.0", features = ["behavior-version-latest"] } # Use the latest version
 aws-sdk-controltower = "1.21.0" # Use the latest version
+aws-sdk-organizations = "1.27.0" # Use the latest version
 tokio = { version = "1", features = ["full"] }
 clap = { version = "4.5.4", features = ["derive"] }
 
