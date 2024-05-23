@@ -24,6 +24,9 @@ jobs:
           profile: minimal
           override: true
 
+      - name: Install Clippy
+        run: rustup component add clippy --toolchain nightly
+
       - name: Cache Cargo registry
         uses: actions/cache@v3
         with:
