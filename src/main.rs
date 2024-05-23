@@ -60,7 +60,7 @@ impl AwsControlTowerClient {
         } else {
             for control in &response.enabled_controls {
                 println!("{} {}", "Control Identifier:".blue(), control.control_identifier.as_ref().unwrap_or(&"None".to_string()));
-                println!("{} {}", "ARN:".blue().to_string(), control.arn.as_ref().unwrap_or(&"None".to_string()));
+                println!("{} {}", "ARN:".blue(), control.arn.as_ref().unwrap_or(&"None".to_string()));
                 println!("{} {}", "Target Identifier:".blue(), control.target_identifier.as_ref().unwrap_or(&"None".to_string()));
 
                 let status = control.status_summary.as_ref()
@@ -138,7 +138,7 @@ impl AwsControlTowerClient {
     // }
 }
 #[tokio::main]
-async fn main() -> Result<(), aws_sdk_controltower::Error> {
+async fn main() -> Result<(), Box<aws_sdk_controltower::Error>> {
 
     say(Options {
         text: String::from("cts-rs"),
