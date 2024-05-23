@@ -1,14 +1,6 @@
 name: Rust Nightly
 
 on:
-  push:
-    branches:
-      - main
-      - dev
-  pull_request:
-    branches:
-      - main
-      - dev
   schedule:
     - cron: '0 0 * * *'  # Run daily at midnight
 
