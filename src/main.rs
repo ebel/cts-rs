@@ -59,9 +59,9 @@ impl AwsControlTowerClient {
             println!("No controls returned");
         } else {
             for control in &response.enabled_controls {
-                println!("{} {}", "Control Identifier:".blue().to_string(), control.control_identifier.as_ref().unwrap_or(&"None".to_string()));
+                println!("{} {}", "Control Identifier:".blue(), control.control_identifier.as_ref().unwrap_or(&"None".to_string()));
                 println!("{} {}", "ARN:".blue().to_string(), control.arn.as_ref().unwrap_or(&"None".to_string()));
-                println!("{} {}", "Target Identifier:".blue().to_string(), control.target_identifier.as_ref().unwrap_or(&"None".to_string()));
+                println!("{} {}", "Target Identifier:".blue(), control.target_identifier.as_ref().unwrap_or(&"None".to_string()));
 
                 let status = control.status_summary.as_ref()
                     .and_then(|summary| summary.status.as_ref())
