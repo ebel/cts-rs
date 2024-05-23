@@ -3,15 +3,14 @@ use aws_config::BehaviorVersion;
 use aws_sdk_controltower::operation::list_baselines::ListBaselinesOutput; // Correct import for ListBaselinesOutput
 use aws_sdk_controltower::{Client as ControlTowerClient, Error as ControlTowerError};
 
+use clap::{Arg, ArgAction, Command};
 use colored::*;
-use clap::{Command, Arg,ArgAction};
 use std::io::{self, Write}; // For input/output operations
-
 
 //Make calls to sdk DRY
 
 extern crate cfonts;
-use cfonts::{ say, Fonts, Colors, Options };
+use cfonts::{say, Colors, Fonts, Options};
 
 pub struct AwsControlTowerClient {
     client: ControlTowerClient,
@@ -50,8 +49,16 @@ impl AwsControlTowerClient {
     }
 
     // Method to list enabled controls for a given target identifier
-    pub async fn list_enabled_controls(&self, target_identifier: String) -> Result<(), aws_sdk_controltower::Error> {
-        let response = self.client.list_enabled_controls().target_identifier(target_identifier).send().await?;
+    pub async fn list_enabled_controls(
+        &self,
+        target_identifier: String,
+    ) -> Result<(), aws_sdk_controltower::Error> {
+        let response = self
+            .client
+            .list_enabled_controls()
+            .target_identifier(target_identifier)
+            .send()
+            .await?;
 
         println!("{}", "Control Tower Control is:".blue());
 
@@ -59,17 +66,39 @@ impl AwsControlTowerClient {
             println!("No controls returned");
         } else {
             for control in &response.enabled_controls {
-                println!("{} {}", "Control Identifier:".blue(), control.control_identifier.as_ref().unwrap_or(&"None".to_string()));
-                println!("{} {}", "ARN:".blue(), control.arn.as_ref().unwrap_or(&"None".to_string()));
-                println!("{} {}", "Target Identifier:".blue(), control.target_identifier.as_ref().unwrap_or(&"None".to_string()));
+                println!(
+                    "{} {}",
+                    "Control Identifier:".blue(),
+                    control
+                        .control_identifier
+                        .as_ref()
+                        .unwrap_or(&"None".to_string())
+                );
+                println!(
+                    "{} {}",
+                    "ARN:".blue(),
+                    control.arn.as_ref().unwrap_or(&"None".to_string())
+                );
+                println!(
+                    "{} {}",
+                    "Target Identifier:".blue(),
+                    control
+                        .target_identifier
+                        .as_ref()
+                        .unwrap_or(&"None".to_string())
+                );
 
-                let status = control.status_summary.as_ref()
+                let status = control
+                    .status_summary
+                    .as_ref()
                     .and_then(|summary| summary.status.as_ref())
                     .map(|status| status.to_string())
                     .unwrap_or("None".to_string());
                 println!("  Status: {}", status);
 
-                let drift_status = control.drift_status_summary.as_ref()
+                let drift_status = control
+                    .drift_status_summary
+                    .as_ref()
                     .and_then(|summary| summary.drift_status.as_ref())
                     .map(|status| status.to_string())
                     .unwrap_or("None".to_string());
@@ -92,7 +121,11 @@ impl AwsControlTowerClient {
                     let _description = &baseline.description;
                     println!("ARN: {}", arn);
                     println!("Name: {}", name);
-                    let _description = baseline.description.as_deref().unwrap_or("No description available");                    println!(); // Adds a blank line for better separation
+                    let _description = baseline
+                        .description
+                        .as_deref()
+                        .unwrap_or("No description available");
+                    println!(); // Adds a blank line for better separation
                 }
 
                 if let Some(next_token) = &response.next_token {
@@ -102,7 +135,7 @@ impl AwsControlTowerClient {
                 }
 
                 Ok(response)
-            },
+            }
             Err(e) => {
                 println!("Error fetching baselines: {}", e);
                 Err(ControlTowerError::from(e))
@@ -139,7 +172,6 @@ impl AwsControlTowerClient {
 }
 #[tokio::main]
 async fn main() -> Result<(), Box<aws_sdk_controltower::Error>> {
-
     say(Options {
         text: String::from("cts-rs"),
         font: Fonts::FontBlock,
@@ -151,20 +183,26 @@ async fn main() -> Result<(), Box<aws_sdk_controltower::Error>> {
         .version(env!("CARGO_PKG_VERSION"))
         .author(env!("CARGO_PKG_AUTHORS"))
         .about(env!("CARGO_PKG_DESCRIPTION"))
-        .arg(Arg::new("target_identifier")
-            .help("Sets the target identifier (OU ARN)")
-            .action(ArgAction::Set)
-            .required(false))
+        .arg(
+            Arg::new("target_identifier")
+                .help("Sets the target identifier (OU ARN)")
+                .action(ArgAction::Set)
+                .required(false),
+        )
         .get_matches();
 
-    let mut target_identifier = matches.get_one::<String>("target_identifier").map(String::from);
+    let mut target_identifier = matches
+        .get_one::<String>("target_identifier")
+        .map(String::from);
 
     // Check if target_identifier was not provided and prompt for it
     if target_identifier.is_none() {
         println!("Please enter a target identifier (OU ARN):");
         let mut input = String::new();
         io::stdout().flush().unwrap(); // Ensure the prompt is displayed immediately
-        io::stdin().read_line(&mut input).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
         target_identifier = Some(input.trim().to_string()); // Trim newline and other whitespace
     }
 
@@ -176,7 +214,9 @@ async fn main() -> Result<(), Box<aws_sdk_controltower::Error>> {
 
     control_tower_client.list_landing_zones().await?;
 
-    control_tower_client.list_enabled_controls(target_identifier).await?;
+    control_tower_client
+        .list_enabled_controls(target_identifier)
+        .await?;
 
     control_tower_client.list_baselines().await?;
 
