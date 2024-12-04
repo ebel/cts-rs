@@ -20,7 +20,7 @@ exclude = [
 [dependencies]
 anyhow = "1.0.75"
 assert_matches = "1.5.0"
-mockall = "0.12.1"
+mockall = "0.13.0"
 tracing = "0.1.37"
 colored = "2.0"
 cfonts = "1"
